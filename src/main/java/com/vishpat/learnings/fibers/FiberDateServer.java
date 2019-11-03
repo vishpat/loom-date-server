@@ -8,8 +8,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Date;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 class DateRequestHandler implements Runnable {
 
@@ -41,13 +39,12 @@ class DateRequestHandler implements Runnable {
 public class FiberDateServer {
     static {
         System.out.println("Starting fibered date server....");
-        Executor executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         FiberScope scope = FiberScope.open();
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()) {
             serverSocketChannel.socket().bind(new InetSocketAddress(59059));
             while (true) {
                 SocketChannel socketChannel = serverSocketChannel.accept();
-                scope.schedule(executor, new DateRequestHandler(socketChannel));
+                scope.schedule(new DateRequestHandler(socketChannel));
             }
         } catch (Exception ex) {
             System.out.printf("Unable to open server socket %s", ex.getMessage());
