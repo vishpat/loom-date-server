@@ -9,3 +9,8 @@ Set the **JAVA_HOME** variable to point to one of the Project Loom [builds](http
 # Run
 
 ```./mvnw install```
+
+This command will start a date server on the port **59059**
+
+# Test
+```nc localhost 59059```
