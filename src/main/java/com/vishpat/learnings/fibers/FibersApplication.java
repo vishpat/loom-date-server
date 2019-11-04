@@ -1,5 +1,6 @@
 package com.vishpat.learnings.fibers;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -36,9 +37,10 @@ class DateRequestHandler implements Runnable {
 }
 
 @SpringBootApplication
-public class FibersApplication {
+public class FibersApplication implements CommandLineRunner {
 
-    public FibersApplication() {
+    @Override
+    public void run(String[] args) {
         System.out.println("Starting fibered date server....");
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()) {
             serverSocketChannel.socket().bind(new InetSocketAddress(59059));
